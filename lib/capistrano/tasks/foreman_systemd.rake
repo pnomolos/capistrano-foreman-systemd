@@ -10,7 +10,7 @@ namespace :foreman_systemd do
           set :foreman_systemd_flags, ''
           set :foreman_systemd_target_path, release_path
           set :foreman_systemd_app, -> { fetch(:application) }
-          set :foreman_systemd_concurrency, 'web=2,worker=1' # default is not set
+          set :foreman_systemd_formation, 'web=2,worker=1' # default is not set
           set :foreman_systemd_log, -> { shared_path.join('log') }
           set :foreman_systemd_port, 3000 # default is not set
           set :foreman_systemd_user, 'www-data' # default is not set
@@ -47,8 +47,10 @@ namespace :foreman_systemd do
           app: fetch(:foreman_systemd_app),
           log: fetch(:foreman_systemd_log)
         }
-        options[:concurrency] = fetch(:foreman_systemd_concurrency) if fetch(:foreman_systemd_concurrency)
-        options[:concurrency] = server.properties.foreman_systemd_concurrency if server.properties.foreman_systemd_concurrency
+        # options[:concurrency] = fetch(:foreman_systemd_concurrency) if fetch(:foreman_systemd_concurrency)
+        # options[:concurrency] = server.properties.foreman_systemd_concurrency if server.properties.foreman_systemd_concurrency
+        options[:formation] = fetch(:foreman_systemd_formation) if fetch(:foreman_systemd_formation)
+        options[:formation] = server.properties.foreman_systemd_formation if server.properties.foreman_systemd_formation
         options[:port] = fetch(:foreman_systemd_port) if fetch(:foreman_systemd_port)
         options[:user] = fetch(:foreman_systemd_user) if fetch(:foreman_systemd_user)
 

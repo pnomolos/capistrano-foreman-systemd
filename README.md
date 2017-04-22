@@ -40,7 +40,7 @@ set :foreman_systemd_export_path, '/etc/init'
 set :foreman_systemd_flags, "--root=#{current_path}" # optional, default is empty string
 set :foreman_systemd_target_path, release_path
 set :foreman_systemd_app, -> { fetch(:application) }
-set :foreman_systemd_concurrency, 'web=2,worker=1' # optional, default is not set
+set :foreman_systemd_formation, 'web=2,worker=1' # optional, default is not set
 set :foreman_systemd_log, -> { shared_path.join('log') }
 set :foreman_systemd_port, 3000 # optional, default is not set
 set :foreman_systemd_user, 'www-data' # optional, default is not set
@@ -85,11 +85,11 @@ From this moment on you only have to run `foreman:setup` when your `Procfile` ha
 
 Finally you have to instruct Capistrano to run `foreman:restart` after deploy:
 
-You can control which process runs on which servers using server variable `foreman_systemd_concurrency`:
+You can control which process runs on which servers using server variable `foreman_systemd_formation`:
 
 ```ruby
-server '123.123.123.1', { roles: [:web], foreman_systemd_concurrency: 'web=1,sidekiq=1' }
-server '123.123.123.1', { roles: [:web], foreman_systemd_concurrency: 'web=1,sidekiq=0' }
+server '123.123.123.1', { roles: [:web], foreman_systemd_formation: 'web=1,sidekiq=1' }
+server '123.123.123.1', { roles: [:web], foreman_systemd_formation: 'web=1,sidekiq=0' }
 ```
 
 Finally
