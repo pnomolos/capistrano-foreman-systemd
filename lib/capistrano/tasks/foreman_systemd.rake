@@ -56,6 +56,7 @@ namespace :foreman_systemd do
 
         sudo :foreman, 'export', fetch(:foreman_systemd_export_format), fetch(:foreman_systemd_export_path),
           options.map{ |k, v| "--#{k}='#{v}'" }, fetch(:foreman_systemd_flags)
+        sudo :systemctl, "daemon-reload"
       end
     end
   end
